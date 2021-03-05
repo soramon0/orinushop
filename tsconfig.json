@@ -22,7 +22,9 @@
       "@/components/*": ["components/*"],
       "@/lib/*": ["lib/*"],
       "@/utils/*": ["utils/*"],
-      "@/interfaces/*": ["interfaces/*"]
+      "@/interfaces/*": ["interfaces/*"],
+      "@/models/*": ["models/*"],
+      "@/styles/*": ["styles/*"]
     }
   },
   "include": [
