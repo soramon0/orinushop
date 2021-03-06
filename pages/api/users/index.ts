@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import dbConnect from "@/lib/db";
+import { dbConnectHandler } from "@/lib/db";
 import User from "@/models/User";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -11,4 +11,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 }
 
-export default dbConnect(handler)
+export default dbConnectHandler(handler)
