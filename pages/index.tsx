@@ -1,9 +1,10 @@
 import Head from 'next/head';
+import { InferGetStaticPropsType } from 'next';
 
-import products from '@/data/products';
+import _products from '@/data/products';
 import Product from '@/components/Product';
 
-export default function Home() {
+function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<div className='bg-gray-100'>
 			<Head>
@@ -24,4 +25,14 @@ export default function Home() {
 			</main>
 		</div>
 	);
+}
+
+export default Home;
+
+export async function getStaticProps() {
+	return {
+		props: {
+			products: _products,
+		},
+	};
 }
