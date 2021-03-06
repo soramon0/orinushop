@@ -27,8 +27,6 @@ function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
 	);
 }
 
-export default Home;
-
 export async function getStaticProps() {
 	return {
 		props: {
@@ -36,3 +34,5 @@ export async function getStaticProps() {
 		},
 	};
 }
+
+export default Home;

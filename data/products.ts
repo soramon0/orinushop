@@ -1,6 +1,6 @@
 import IProduct from "@/interfaces/product"
 
-const products: IProduct[] = [
+const _products: IProduct[] = [
   {
     _id: '1',
     name: 'Airpods Wireless Bluetooth Headphones',
@@ -81,4 +81,4 @@ const products: IProduct[] = [
   },
 ]
 
-export default products
+export default _products
