@@ -24,7 +24,8 @@
       "@/utils/*": ["utils/*"],
       "@/interfaces/*": ["interfaces/*"],
       "@/models/*": ["models/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/data/*": ["data/*"]
     }
   },
   "include": [
