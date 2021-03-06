@@ -1,6 +1,7 @@
 import { VFC } from 'react';
 
 import IProduct from '@/interfaces/product';
+import ProductRating from './ProductRating';
 
 type Props = {
 	product: IProduct;
@@ -14,7 +15,7 @@ const Product: VFC<Props> = ({ product }) => {
 			<div className='bg-white p-4 shadow-sm'>
 				<a href={productPath}>
 					<img
-						className='w-full h-48 object-cover'
+						className='w-full h-64 object-cover'
 						src={product.image}
 						alt=''
 					/>
@@ -30,9 +31,7 @@ const Product: VFC<Props> = ({ product }) => {
 						</h3>
 					</a>
 
-					<span className='inline-block text-gray-500'>
-						{product.rating} from {product.numReviews} reviews
-					</span>
+					<ProductRating rating={product.rating} count={product.numReviews} />
 
 					<h3 className='text-2xl font-bold text-gray-800 tracking-wide'>
 						${product.price}
