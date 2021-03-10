@@ -13,7 +13,12 @@ type Props = {
 function ProductPage({ product }: Props) {
 	const router = useRouter();
 	const productStatus = product?.countInStock ? 'In Stock' : 'Out Of Stock';
+	const isDisabled = productStatus === 'Out Of Stock' ? true : false;
+	const btnStyle = isDisabled
+		? 'cursor-not-allowed bg-gray-700'
+		: 'cursor-pointer bg-gray-800 hover:bg-gray-900';
 
+	console.log(isDisabled);
 	if (router.isFallback) {
 		return <div>Finding Product...</div>;
 	}
@@ -55,7 +60,10 @@ function ProductPage({ product }: Props) {
 						Status: <span>{productStatus}</span>
 					</p>
 					<div className='border border-t-0 p-2 text-center md:px-4'>
-						<button className='w-11/12 py-2 px-4 bg-gray-800 hover:bg-gray-900 text-white font-bold  rounded'>
+						<button
+							className={`w-11/12 py-2 px-4 text-white font-bold rounded ${btnStyle}`}
+							disabled={isDisabled}
+						>
 							Add to cart
 						</button>
 					</div>
