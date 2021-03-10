@@ -1,24 +1,6 @@
 import mongoose from 'mongoose'
 import { IProductDoc } from '@/interfaces/product'
 
-const reviewSchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true
-	},
-	rating: {
-		type: Number,
-		required: true,
-	},
-	comment: {
-		type: String,
-		required: true
-	}
-}, {
-	timestamps: true
-})
-
-
 const ProductSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -45,7 +27,22 @@ const ProductSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	reviews: [reviewSchema],
+	reviews: [{
+		name: {
+			type: String,
+			required: true
+		},
+		rating: {
+			type: Number,
+			required: true,
+		},
+		comment: {
+			type: String,
+			required: true
+		}
+	}, {
+		timestamps: true
+	}],
 	rating: {
 		type: Number,
 		required: true,
