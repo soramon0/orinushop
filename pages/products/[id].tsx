@@ -13,12 +13,11 @@ type Props = {
 function ProductPage({ product }: Props) {
 	const router = useRouter();
 	const productStatus = product?.countInStock ? 'In Stock' : 'Out Of Stock';
-	const isDisabled = productStatus === 'Out Of Stock' ? true : false;
+	const isDisabled = product?.countInStock ? false : true;
 	const btnStyle = isDisabled
 		? 'cursor-not-allowed bg-gray-700'
 		: 'cursor-pointer bg-gray-800 hover:bg-gray-900';
 
-	console.log(isDisabled);
 	if (router.isFallback) {
 		return <div>Finding Product...</div>;
 	}
