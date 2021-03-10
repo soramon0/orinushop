@@ -1,4 +1,8 @@
-export default interface IProduct {
+import { Document } from "mongoose";
+
+import IReview from '@/interfaces/review'
+
+export type IProduct = {
 	_id: string
 	name: string
 	image: string
@@ -9,4 +13,9 @@ export default interface IProduct {
 	countInStock: number
 	rating: number
 	numReviews: number
+	reviews: IReview[]
 }
+
+export default IProduct
+
+export type IProductDoc = IProduct & Document
