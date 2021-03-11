@@ -1,9 +1,11 @@
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { isValidObjectId } from 'mongoose';
 
-import IProduct from '@/interfaces/product';
-import _products from '@/data/products';
+import dbConnect from '@/lib/db';
+import { default as ProductModel } from '@/models/Product';
+import IProduct, { IProductDoc } from '@/interfaces/product';
 import ProductRating from '@/components/ProductRating';
 
 type Props = {
@@ -73,7 +75,12 @@ function ProductPage({ product }: Props) {
 }
 
 export async function getStaticPaths() {
-	const paths = _products.map((p) => ({ params: { id: p._id } }));
+	await dbConnect();
+
+	const docs: IProductDoc[] = await ProductModel.find({});
+	const paths = docs.map((p) => ({
+		params: { id: p._id.toString() as string },
+	}));
 
 	return {
 		paths,
@@ -81,22 +88,37 @@ export async function getStaticPaths() {
 	};
 }
 
-export function getStaticProps({ params }: GetStaticPropsContext) {
+export async function getStaticProps({ params }: GetStaticPropsContext) {
 	const id = params!.id;
-	const product = _products.find((p) => p._id === id);
 
-	if (!product) {
+	if (!id || !isValidObjectId(id)) {
 		return {
 			notFound: true,
 		};
 	}
 
-	return {
-		props: {
-			product,
-		},
-		revalidate: 1,
-	};
+	try {
+		await dbConnect();
+
+		const doc: IProductDoc = await ProductModel.findById(id);
+
+		if (!doc) {
+			return {
+				notFound: true,
+			};
+		}
+
+		return {
+			props: {
+				product: doc.serialize(),
+			},
+			revalidate: 1,
+		};
+	} catch {
+		return {
+			notFound: true,
+		};
+	}
 }
 
 export default ProductPage;

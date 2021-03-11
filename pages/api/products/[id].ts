@@ -12,13 +12,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 			return res.status(400).json({ message: 'id is not valid.' })
 		}
 
-		const product = await Product.findById(id)
+		try {
+			const product = await Product.findById(id)
 
-		if (!product) {
-			return res.status(404).json({ message: 'product not found.' })
+			if (!product) {
+				return res.status(404).json({ message: 'product not found.' })
+			}
+
+			return res.json({ product })
+		} catch {
+			return res.status(400).json({ message: `'${id}' is a bad id.` })
 		}
-
-		return res.json({ product })
 	}
 }
 
