@@ -1,6 +1,7 @@
 import { Document } from 'mongoose'
 
 type IUser = {
+	_id: string
 	name: string
 	email: string
 	password: string

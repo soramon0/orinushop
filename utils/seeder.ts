@@ -13,7 +13,7 @@ export async function importData() {
 		await Product.deleteMany()
 		await User.deleteMany()
 
-		const users = await User.insertMany(_users)
+		const users = await User.insertMany(_users.map(({ _id, ...u }) => u))
 
 		const admin = users[0]._id
 		const products: any[] = _products.map(({ _id, ...p }) => ({ ...p, user: admin }))
