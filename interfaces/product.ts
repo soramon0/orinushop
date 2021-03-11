@@ -14,8 +14,13 @@ export type IProduct = {
 	rating: number
 	numReviews: number
 	reviews: IReview[]
+	user: string
+	createdAt: string
+	updatedAt: string
 }
 
 export default IProduct
 
-export type IProductDoc = IProduct & Document
+export type IProductDoc = IProduct & Document & {
+	serialize(): IProduct
+}

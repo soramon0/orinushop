@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
 
-import _products from '@/data/products';
+import dbConnect from '@/lib/db';
+import { default as ProductModel } from '@/models/Product';
+import { IProductDoc } from '@/interfaces/product';
 import Product from '@/components/Product';
 
 function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -28,9 +30,14 @@ function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
 }
 
 export async function getStaticProps() {
+	await dbConnect();
+
+	const docs: IProductDoc[] = await ProductModel.find({});
+	const products = docs.map((doc) => doc.serialize());
+
 	return {
 		props: {
-			products: _products,
+			products,
 		},
 	};
 }

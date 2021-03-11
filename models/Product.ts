@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { IProductDoc } from '@/interfaces/product'
 
-const ProductSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true,
@@ -67,4 +67,14 @@ const ProductSchema = new mongoose.Schema({
 	timestamps: true
 })
 
-export default mongoose.models.Product || mongoose.model<IProductDoc>('Product', ProductSchema)
+productSchema.methods.serialize = function () {
+	const product = this.toObject() as IProductDoc
+	product._id = product._id.toString();
+	product.user = product.user?.toString();
+	product.createdAt = product.createdAt.toString();
+	product.updatedAt = product.updatedAt.toString();
+
+	return product;
+}
+
+export default mongoose.models.Product || mongoose.model<IProductDoc>('Product', productSchema)
