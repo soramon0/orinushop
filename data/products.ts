@@ -13,7 +13,10 @@ const _products: IProduct[] = [
     countInStock: 10,
     rating: 4.5,
     numReviews: 12,
-    reviews: []
+    reviews: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    user: ''
   },
   {
     _id: '2',
@@ -27,8 +30,10 @@ const _products: IProduct[] = [
     countInStock: 7,
     rating: 4.0,
     numReviews: 8,
-    reviews: []
-
+    reviews: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    user: ''
   },
   {
     _id: '3',
@@ -42,8 +47,10 @@ const _products: IProduct[] = [
     countInStock: 5,
     rating: 3,
     numReviews: 12,
-    reviews: []
-
+    reviews: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    user: ''
   },
   {
     _id: '4',
@@ -57,8 +64,10 @@ const _products: IProduct[] = [
     countInStock: 11,
     rating: 5,
     numReviews: 12,
-    reviews: []
-
+    reviews: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    user: ''
   },
   {
     _id: '5',
@@ -72,8 +81,10 @@ const _products: IProduct[] = [
     countInStock: 7,
     rating: 3.5,
     numReviews: 10,
-    reviews: []
-
+    reviews: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    user: ''
   },
   {
     _id: '6',
@@ -87,7 +98,10 @@ const _products: IProduct[] = [
     countInStock: 0,
     rating: 4,
     numReviews: 12,
-    reviews: []
+    reviews: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    user: ''
   },
 ]
 

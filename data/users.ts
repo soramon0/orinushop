@@ -9,7 +9,7 @@ const _users: IUser[] = [
 		password: bcrypt.hashSync('password'),
 		isAdmin: true,
 		createdAt: new Date().toISOString(),
-		updateAt: new Date().toISOString()
+		updatedAt: new Date().toISOString()
 	},
 	{
 		_id: '2',
@@ -18,7 +18,7 @@ const _users: IUser[] = [
 		password: bcrypt.hashSync('password'),
 		isAdmin: false,
 		createdAt: new Date().toISOString(),
-		updateAt: new Date().toISOString()
+		updatedAt: new Date().toISOString()
 	},
 	{
 		_id: '3',
@@ -27,7 +27,7 @@ const _users: IUser[] = [
 		password: bcrypt.hashSync('password'),
 		isAdmin: false,
 		createdAt: new Date().toISOString(),
-		updateAt: new Date().toISOString()
+		updatedAt: new Date().toISOString()
 	},
 ]
 

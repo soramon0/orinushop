@@ -7,7 +7,7 @@ type IUser = {
 	password: string
 	isAdmin: boolean
 	createdAt: string
-	updateAt: string
+	updatedAt: string
 }
 
 export default IUser
