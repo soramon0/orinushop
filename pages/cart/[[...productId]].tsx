@@ -1,14 +1,22 @@
+import { useCart } from '@/lib/cart';
 import { useRouter } from 'next/router';
 
 function Cart() {
 	const router = useRouter();
-	console.log(router);
+	const { items } = useCart();
 
 	if (!router.isReady) {
 		return <p>Loading...</p>;
 	}
 
-	return <h1>Cart</h1>;
+	return (
+		<div>
+			<h1>Cart Items</h1>
+			{items.map((item) => (
+				<p>Product: {item}</p>
+			))}
+		</div>
+	);
 }
 
 export default Cart;

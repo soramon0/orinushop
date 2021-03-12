@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { isValidObjectId } from 'mongoose';
 
 import dbConnect from '@/lib/db';
+import { useCart } from '@/lib/cart';
 import { default as ProductModel } from '@/models/Product';
 import IProduct, { IProductDoc } from '@/interfaces/product';
 import ProductRating from '@/components/ProductRating';
@@ -14,8 +15,9 @@ type Props = {
 };
 
 function ProductPage({ product }: Props) {
-	const [quantity, setQuantity] = useState(0);
 	const router = useRouter();
+	const [quantity, setQuantity] = useState(1);
+	const { addItem } = useCart();
 	const inStock = product.countInStock ? true : false;
 	const productStatus = inStock ? 'In Stock' : 'Out Of Stock';
 	const btnStyle = !inStock
@@ -23,7 +25,9 @@ function ProductPage({ product }: Props) {
 		: 'cursor-pointer bg-gray-800 hover:bg-gray-900';
 
 	const addToCart = () => {
-		router.push(`/cart/${product._id}?quantity=${quantity}`);
+		const { _id } = product;
+		addItem(_id);
+		router.push(`/cart/${_id}?quantity=${quantity}`);
 	};
 
 	return (
