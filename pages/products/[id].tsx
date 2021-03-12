@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -13,12 +14,17 @@ type Props = {
 };
 
 function ProductPage({ product }: Props) {
+	const [quantity, setQuantity] = useState(0);
 	const router = useRouter();
-	const productStatus = product.countInStock ? 'In Stock' : 'Out Of Stock';
-	const isDisabled = product.countInStock ? false : true;
-	const btnStyle = isDisabled
+	const inStock = product.countInStock ? true : false;
+	const productStatus = inStock ? 'In Stock' : 'Out Of Stock';
+	const btnStyle = !inStock
 		? 'cursor-not-allowed bg-gray-700'
 		: 'cursor-pointer bg-gray-800 hover:bg-gray-900';
+
+	const addToCart = () => {
+		router.push(`/cart/${product._id}?quantity=${quantity}`);
+	};
 
 	return (
 		<div className='p-4 max-w-screen-lg mx-auto 2xl:max-w-screen-xl'>
@@ -51,15 +57,40 @@ function ProductPage({ product }: Props) {
 				</div>
 				<div className='w-full mt-6 sm:mt-0 sm:w-1/5'>
 					<p className='border p-2 flex justify-between md:px-4'>
-						Price: <span>{product.price}</span>
+						Price: <span className='class="text-sm"'>{product.price}</span>
 					</p>
 					<p className='border border-t-0 p-2 flex justify-between md:px-4'>
-						Status: <span>{productStatus}</span>
+						Status: <span className='text-sm'>{productStatus}</span>
 					</p>
+
+					{inStock && (
+						<form className='border border-t-0 p-2 flex justify-between md:px-4'>
+							<label htmlFor='quantity'>Quantity:</label>
+							<select
+								id='quantity'
+								className='w-1/2 py-1 px-2 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+								onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+							>
+								{Array.from({ length: product.countInStock })
+									.fill(1)
+									.map((_, i) => {
+										const current = i + 1;
+
+										return (
+											<option key={current} value={current}>
+												{current}
+											</option>
+										);
+									})}
+							</select>
+						</form>
+					)}
+
 					<div className='border border-t-0 p-2 text-center md:px-4'>
 						<button
-							className={`w-11/12 py-2 px-4 text-white font-bold rounded ${btnStyle}`}
-							disabled={isDisabled}
+							className={`w-11/12 py-2 px-4 text-sm text-white font-bold rounded ${btnStyle}`}
+							disabled={!inStock}
+							onClick={addToCart}
 						>
 							Add to cart
 						</button>
