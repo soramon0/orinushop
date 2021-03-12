@@ -1,4 +1,4 @@
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { isValidObjectId } from 'mongoose';
@@ -14,15 +14,11 @@ type Props = {
 
 function ProductPage({ product }: Props) {
 	const router = useRouter();
-	const productStatus = product?.countInStock ? 'In Stock' : 'Out Of Stock';
-	const isDisabled = product?.countInStock ? false : true;
+	const productStatus = product.countInStock ? 'In Stock' : 'Out Of Stock';
+	const isDisabled = product.countInStock ? false : true;
 	const btnStyle = isDisabled
 		? 'cursor-not-allowed bg-gray-700'
 		: 'cursor-pointer bg-gray-800 hover:bg-gray-900';
-
-	if (router.isFallback) {
-		return <div>Finding Product...</div>;
-	}
 
 	return (
 		<div className='p-4 max-w-screen-lg mx-auto 2xl:max-w-screen-xl'>
@@ -74,7 +70,7 @@ function ProductPage({ product }: Props) {
 	);
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
 	await dbConnect();
 
 	const docs: IProductDoc[] = await ProductModel.find({});
@@ -84,11 +80,11 @@ export async function getStaticPaths() {
 
 	return {
 		paths,
-		fallback: true,
+		fallback: 'blocking',
 	};
-}
+};
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const id = params!.id;
 
 	if (!id || !isValidObjectId(id)) {
@@ -119,6 +115,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 			notFound: true,
 		};
 	}
-}
+};
 
 export default ProductPage;
