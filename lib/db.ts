@@ -1,17 +1,13 @@
 import mongoose from 'mongoose'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const DB_URI = process.env.DB_URI
+import { getDbLink } from '@/utils/env'
+
+const DB_URI = getDbLink()
 
 export default async function dbConnect() {
 	if (mongoose.connection.readyState >= 1) {
 		return
-	}
-
-	if (!DB_URI) {
-		throw new Error(
-			'Please define the DB_URI environment variable inside .env.local'
-		)
 	}
 
 	await mongoose.connect(DB_URI, {

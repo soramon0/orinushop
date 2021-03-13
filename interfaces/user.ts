@@ -4,7 +4,6 @@ type IUser = {
 	_id: string
 	name: string
 	email: string
-	password: string
 	isAdmin: boolean
 	createdAt: string
 	updatedAt: string
@@ -12,4 +11,8 @@ type IUser = {
 
 export default IUser
 
-export type IUserDoc = IUser & Document
+export type IUserDoc = IUser & Document & {
+	password: string
+	serialize(): IUser
+	checkPassword(password: string): Promise<boolean>
+}

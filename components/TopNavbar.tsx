@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/client';
 import Link from 'next/link';
 
 function TopNavbar() {
+	const [session, loading] = useSession();
 	const [isOpen, setIsOpen] = useState(false);
+	const isSignedIn = session && !loading;
 	const showOpenIcon = !isOpen ? 'block' : 'hidden';
 	const shopCloseIcon = isOpen ? 'block' : 'hidden';
 	const openTransition = !isOpen
@@ -71,11 +74,23 @@ function TopNavbar() {
 									</a>
 								</Link>
 
-								<Link href='/signin'>
-									<a className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
+								{!isSignedIn && (
+									<button
+										className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
+										onClick={() => signIn()}
+									>
 										Sign in
-									</a>
-								</Link>
+									</button>
+								)}
+
+								{isSignedIn && (
+									<button
+										className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
+										onClick={() => signOut()}
+									>
+										Sign Out
+									</button>
+								)}
 							</div>
 						</div>
 					</div>
@@ -93,11 +108,23 @@ function TopNavbar() {
 						</a>
 					</Link>
 
-					<Link href='/signin'>
-						<a className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'>
+					{!isSignedIn && (
+						<button
+							className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
+							onClick={() => signIn()}
+						>
 							Sign in
-						</a>
-					</Link>
+						</button>
+					)}
+
+					{isSignedIn && (
+						<button
+							className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
+							onClick={() => signOut()}
+						>
+							Sign out
+						</button>
+					)}
 				</div>
 			</div>
 		</nav>
