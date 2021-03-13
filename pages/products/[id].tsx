@@ -35,7 +35,7 @@ function ProductPage({ product }: Props) {
 		};
 		addItem(item);
 
-		router.push('cart');
+		router.push('/cart');
 	};
 
 	return (
