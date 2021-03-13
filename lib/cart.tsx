@@ -7,9 +7,20 @@ import {
 	useState,
 } from 'react';
 
+export type ICartItem = {
+	productId: string;
+	name: string;
+	image: string;
+	price: number;
+	countInStock: number;
+	quantity: number;
+};
+
 interface Context {
-	items: string[];
-	addItem(item: string): void;
+	items: ICartItem[];
+	addItem(item: ICartItem): void;
+	removeItem(productId: string): void;
+	changeQuantity(productId: string, quantity: number): void;
 }
 
 const CartContext = createContext<Context | undefined>(undefined);
@@ -25,29 +36,45 @@ export function useCart() {
 }
 
 const CartProvider: FC = ({ children }) => {
-	const [items, setItems] = useState<string[]>([]);
+	const [items, setItems] = useState<ICartItem[]>([]);
 
 	useEffect(() => {
 		const cart = localStorage.getItem('cart');
 
 		if (cart) {
-			const items: string[] = JSON.parse(cart);
+			const items: ICartItem[] = JSON.parse(cart);
 
 			setItems(items);
 		}
 	}, []);
 
+	const storeItems = (newItems: ICartItem[]) => {
+		setItems(newItems);
+		localStorage.setItem('cart', JSON.stringify(items));
+	};
+
 	const value = useMemo(
 		() => ({
 			items,
-			addItem: (item: string) => {
-				const itemExists = items.includes(item);
+			addItem(item: ICartItem) {
+				const itemExists = items.some((i) => i.productId === item.productId);
 
 				if (!itemExists) {
-					const newState = [...items, item];
-					setItems(newState);
-					return localStorage.setItem('cart', JSON.stringify(newState));
+					storeItems([...items, item]);
 				}
+			},
+			removeItem(productId: string) {
+				const newItems = items.filter((i) => i.productId !== productId);
+				storeItems(newItems);
+			},
+			changeQuantity(productId: string, quantity: number) {
+				const index = items.findIndex((i) => i.productId === productId);
+
+				if (index === -1) return;
+
+				const newItems = [...items];
+				newItems[index].quantity = quantity;
+				storeItems(newItems);
 			},
 		}),
 		[items]
