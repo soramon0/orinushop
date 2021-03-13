@@ -7,6 +7,7 @@ type IUser = {
 	isAdmin: boolean
 	createdAt: string
 	updatedAt: string
+	password?: string
 }
 
 export default IUser
