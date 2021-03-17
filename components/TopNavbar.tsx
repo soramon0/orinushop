@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/client';
 import Link from 'next/link';
 
 function TopNavbar() {
@@ -75,12 +75,11 @@ function TopNavbar() {
 								</Link>
 
 								{!isSignedIn && (
-									<button
-										className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-										onClick={() => signIn()}
-									>
-										Sign in
-									</button>
+									<Link href='/signin'>
+										<a className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
+											Sign in
+										</a>
+									</Link>
 								)}
 
 								{isSignedIn && (
@@ -109,12 +108,11 @@ function TopNavbar() {
 					</Link>
 
 					{!isSignedIn && (
-						<button
-							className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
-							onClick={() => signIn()}
-						>
-							Sign in
-						</button>
+						<Link href='/signin'>
+							<a className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'>
+								Sign in
+							</a>
+						</Link>
 					)}
 
 					{isSignedIn && (

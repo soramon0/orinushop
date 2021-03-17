@@ -2,8 +2,8 @@ import NextAuth, { InitOptions } from 'next-auth'
 import Providers from 'next-auth/providers'
 import bcrypt from 'bcryptjs'
 
-import * as env from '@/utils/env'
-import { IUserDoc } from '@/interfaces/user'
+import { getSecret } from '@/utils/env'
+import IUser, { IUserDoc } from '@/interfaces/user'
 import dbConnect from '@/lib/db'
 import User from '@/models/User'
 
@@ -32,8 +32,26 @@ const options: InitOptions = {
 			},
 		})
 	],
+	pages: {
+		signIn: '/signin'
+	},
+	callbacks: {
+		async jwt(token, user: IUser, account, profile, isNewUser) {
+			const isSignIn = user ? true : false;
+			if (isSignIn) {
+				token._id = user._id;
+				token.isAdmin = user.isAdmin;
+			}
+
+			return token;
+		},
+		async session(session, user: IUser) {
+			const formattedUser = { _id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email }
+			return { ...session, user: formattedUser };
+		},
+	},
 	jwt: {
-		secret: env.getSecret()
+		secret: getSecret()
 	}
 }
 
