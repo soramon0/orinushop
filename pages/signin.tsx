@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
@@ -38,7 +38,12 @@ function SignInPage() {
 				method='post'
 				action='/api/auth/callback/credentials'
 			>
-				<input name='csrfToken' type='hidden' ref={inputRef} />
+				<input
+					name='csrfToken'
+					type='hidden'
+					// @ts-ignore
+					ref={inputRef}
+				/>
 				<div className='space-y-2'>
 					<label
 						htmlFor='email'
