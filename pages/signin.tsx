@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef, MutableRefObject } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import axios from 'axios';
 
 function SignInPage() {
@@ -80,6 +81,12 @@ function SignInPage() {
 				>
 					Sign in
 				</button>
+				<p className='text-gray-700'>
+					New Customer?{' '}
+					<Link href='/register'>
+						<a className='font-semibold'>Register</a>
+					</Link>
+				</p>
 			</form>
 		</main>
 	);

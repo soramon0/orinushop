@@ -5,6 +5,10 @@ import Link from 'next/link';
 function TopNavbar() {
 	const [session, loading] = useSession();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const dropDownEntering = isDropdownOpen
+		? 'transform opacity-100 scale-100 visible'
+		: 'transform opacity-0 scale-95 invisible';
 	const isSignedIn = session && !loading;
 	const showOpenIcon = !isOpen ? 'block' : 'hidden';
 	const shopCloseIcon = isOpen ? 'block' : 'hidden';
@@ -66,8 +70,8 @@ function TopNavbar() {
 								</a>
 							</Link>
 						</div>
-						<div className='hidden sm:block sm:ml-6'>
-							<div className='flex space-x-4'>
+						<div className='hidden sm:flex sm:items-center sm:ml-6 sm:w-full'>
+							<div className='ml-auto space-x-4'>
 								<Link href='/cart'>
 									<a className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
 										Cart
@@ -76,19 +80,65 @@ function TopNavbar() {
 
 								{!isSignedIn && (
 									<Link href='/signin'>
-										<a className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
+										<a className='ml-1 bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
 											Sign in
 										</a>
 									</Link>
 								)}
 
 								{isSignedIn && (
-									<button
-										className='bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-										onClick={() => signOut()}
-									>
-										Sign Out
-									</button>
+									<div className=' relative inline-block text-left visible'>
+										<div>
+											<button
+												type='button'
+												className='inline-flex justify-center w-full shadow-sm px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-600 focus:ring-indigo-500'
+												id='options-menu'
+												aria-expanded='true'
+												aria-haspopup='true'
+												onClick={() => setIsDropdownOpen((state) => !state)}
+											>
+												{session?.user.name}
+												<svg
+													className='-mr-1 ml-2 h-5 w-5'
+													xmlns='http://www.w3.org/2000/svg'
+													viewBox='0 0 20 20'
+													fill='currentColor'
+													aria-hidden='true'
+												>
+													<path
+														fillRule='evenodd'
+														d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+														clipRule='evenodd'
+													/>
+												</svg>
+											</button>
+										</div>
+										<div
+											className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transition ease-out duration-100 ${dropDownEntering}`}
+											role='menu'
+											aria-orientation='vertical'
+											aria-labelledby='options-menu'
+										>
+											<div className='py-1' role='none'>
+												<Link href='/account'>
+													<a
+														className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+														role='menuitem'
+													>
+														Account
+													</a>
+												</Link>
+												<button
+													type='submit'
+													className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+													role='menuitem'
+													onClick={() => signOut()}
+												>
+													Sign out
+												</button>
+											</div>
+										</div>
+									</div>
 								)}
 							</div>
 						</div>
@@ -104,6 +154,12 @@ function TopNavbar() {
 					<Link href='/cart'>
 						<a className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
 							Cart
+						</a>
+					</Link>
+
+					<Link href='/account'>
+						<a className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
+							Account
 						</a>
 					</Link>
 
