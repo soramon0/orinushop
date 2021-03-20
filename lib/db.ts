@@ -13,7 +13,7 @@ export default async function dbConnect() {
 	await mongoose.connect(DB_URI, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
-		useFindAndModify: true,
+		useFindAndModify: false,
 		useCreateIndex: true
 	})
 }
