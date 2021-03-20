@@ -16,11 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const sessionUser = session.user as IUser
 
 	if (req.method == 'GET') {
-		try {
-			return res.json({ user: sessionUser })
-		} catch {
-			return res.status(500).json({ message: 'Registeration failed. Please try again later.' })
-		}
+		return res.json({ user: sessionUser })
 	}
 
 	if (req.method == 'PUT') {
