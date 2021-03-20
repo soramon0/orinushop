@@ -46,7 +46,14 @@ const options: InitOptions = {
 			return token;
 		},
 		async session(session, user: IUser) {
-			const formattedUser = { _id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email }
+			const formattedUser = {
+				_id: user._id,
+				isAdmin: user.isAdmin,
+				name: user.name,
+				email: user.email,
+				createdAt: user.createdAt,
+				updatedAt: user.updatedAt
+			}
 			return { ...session, user: formattedUser };
 		},
 	},
