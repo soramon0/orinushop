@@ -79,11 +79,18 @@ function TopNavbar() {
 								</Link>
 
 								{!isSignedIn && (
-									<Link href='/signin'>
-										<a className='ml-1 bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
-											Sign in
-										</a>
-									</Link>
+									<>
+										<Link href='/register'>
+											<a className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
+												Sign up
+											</a>
+										</Link>
+										<Link href='/signin'>
+											<a className='ml-1 bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'>
+												Sign in
+											</a>
+										</Link>
+									</>
 								)}
 
 								{isSignedIn && (
@@ -157,27 +164,35 @@ function TopNavbar() {
 						</a>
 					</Link>
 
-					<Link href='/account'>
-						<a className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
-							Account
-						</a>
-					</Link>
-
 					{!isSignedIn && (
-						<Link href='/signin'>
-							<a className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'>
-								Sign in
-							</a>
-						</Link>
+						<>
+							<Link href='/register'>
+								<a className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-mediumm'>
+									Sign up
+								</a>
+							</Link>
+							<Link href='/signin'>
+								<a className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'>
+									Sign in
+								</a>
+							</Link>
+						</>
 					)}
 
 					{isSignedIn && (
-						<button
-							className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
-							onClick={() => signOut()}
-						>
-							Sign out
-						</button>
+						<>
+							<Link href='/account'>
+								<a className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'>
+									Account
+								</a>
+							</Link>
+							<button
+								className='bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium'
+								onClick={() => signOut()}
+							>
+								Sign out
+							</button>
+						</>
 					)}
 				</div>
 			</div>
